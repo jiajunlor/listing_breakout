@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 
-resources :listings
+resources :listings #7 restful routes are automatically inserted
 
 get '/damien', to: "listings#profile", as: "damiensss"
 

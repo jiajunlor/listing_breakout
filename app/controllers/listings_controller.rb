@@ -1,5 +1,7 @@
 class ListingsController < ApplicationController
-#crud
+
+  before_action :set_listing, only: [:show, :edit, :update, :destroy]
+
   def profile
     @my_listings = current_user.listings #means i log in, i click on see my profile, i want to see only my posted listings, i do not want to see other's listings
 
@@ -33,7 +35,8 @@ class ListingsController < ApplicationController
 
   #READ-SHOW
   def show
-    @listing = Listing.find(params[:id])
+
+
   end
 
   #READ-INDEX
@@ -42,7 +45,39 @@ class ListingsController < ApplicationController
   end
 
 
+  #EDIT-EDIT
+  def edit
 
+ #to find out which listing i want to edit
+
+    if @listing.user == current_user
+      render :edit
+    else
+      redirect_to sign_in_path
+    end
+
+    #it will then render out my 'app/views/listings/edit.html.erb'
+  end
+
+  #EDIT-UPDATE
+  def update
+
+    @listing.update(listing_params)
+
+    if @listing.save #happy path
+      redirect_to @listing #the show page
+    else #unhappy path
+      render :edit #render back edit.html.erb again
+    end
+
+  end
+
+  #DELETE
+  def destroy
+
+    @listing.destroy
+    redirect_to listings_path #read-index page that shows all my listings
+  end
 
   private #in future, when i apply testing in rspec, i do not want to launch testing on these private methods (not necessarily)
 
@@ -50,23 +85,12 @@ class ListingsController < ApplicationController
       params.require(:listing).permit(:name, :description)
     end
 
+    def set_listing
+      @listing = Listing.find(params[:id])
+    end
 
 
-
-
-  # def index
-  # end
-
-  # def edit
-  # end
-
-  # def update
-  # end
-
-  # def destroy
-  # end
-
-    # post '/listings' do
+  # post '/listings' do
   #   @listing = current_user.listings.new(params[:listing])
   #   if @listing.save #happy path
   #     redirect to '/listings/#{@listing.id}'
