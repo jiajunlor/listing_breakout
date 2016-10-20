@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
 
 
-resources :listings #7 restful routes are automatically inserted
+#nested resources of listings and reservations
+resources :listings do
+  resources :reservations
+end
+
+
+ #7 restful routes are automatically inserted
 
 get '/damien', to: "listings#profile", as: "damiensss"
 
@@ -25,6 +31,7 @@ get "/sign_up" => "clearance/users#new", as: "sign_up"
 get "/auth/:provider/callback" => "sessions#create_from_omniauth"
 
 
+delete '/delete_image' => "listings#delete_image", as: "james"
 
 
 end

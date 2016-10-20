@@ -5,5 +5,8 @@
   <% if x.user == current_user %>
     <%= link_to "Edit this listing", edit_listing_path(x) %><br>
     <%= link_to "Delete this listing", listing_path(x), method: :delete %><br>
+    <% else %>
+    <%= link_to "Reserve this listing", new_listing_reservation_path(x) %><br>
   <% end %>
 <% end %>
+

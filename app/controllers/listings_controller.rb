@@ -98,4 +98,10 @@ class ListingsController < ApplicationController
   #     render :"listings/new"
   #   end
   # end
+
+
+  def delete_image
+    @listing.avatar.destroy
+    @listing.save
+  end
 end

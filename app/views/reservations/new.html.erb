@@ -1,0 +1,11 @@
+<%= form_for [@listing, @reservation] do |f| %>
+
+  <%= f.label :check_in %>
+  <%= f.date_field :check_in %>
+  <%= f.label :check_out %>
+  <%= f.date_field :check_out %>
+
+  <%= f.hidden_field :listing_id, value: @listing.id %>
+
+  <%= f.submit %>
+<% end %>
